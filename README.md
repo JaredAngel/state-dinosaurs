@@ -5,6 +5,8 @@ official U.S. state dinosaurs :sauropod:.
 
 This application was written using jQuery, JavaScript, HTML, and CSS.
 
+[site]: https://jaredangel.github.io/state-dinosaurs/
+
 ## Table of contents
 
 - [Demo](#demo)
