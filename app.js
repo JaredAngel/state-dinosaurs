@@ -86,7 +86,7 @@ const store = {
   questionNumber: 0, // The current question number user is on
   correct: false, // Whether user's most recent answer was correct
   score: 0, // The user's cumulative score
-  view: 'feedback', // The view of the page: 'intro', 'question', 'feedback', 'results'
+  view: 'intro', // The view of the page: 'intro', 'question', 'feedback', 'results'
 };
 
 /********** TEMPLATE GENERATION FUNCTIONS **********/
