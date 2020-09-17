@@ -122,13 +122,13 @@ const generateQuestionViewHTML = function (question, questionNumber, score, tota
     <p class="question"><i>The ${question.dinosaur} is the official dinosaur of which U.S. state?</i></p>
     
     <form class="js-questionnaire">
-      <input type="radio" id="${question.options[0]}" name="answer" value="${question.options[0]}" required>
+      <input type="radio" id="${question.options[0]}" name="answer" value="${question.options[0]}">
       <label for="">${question.options[0]}</label>
-      <input type="radio" id="${question.options[1]}" name="answer" value="${question.options[1]}" required>
+      <input type="radio" id="${question.options[1]}" name="answer" value="${question.options[1]}">
       <label for="">${question.options[1]}</label>
-      <input type="radio" id="${question.options[2]}" name="answer" value="${question.options[2]}" required>
+      <input type="radio" id="${question.options[2]}" name="answer" value="${question.options[2]}">
       <label for="">${question.options[2]}</label>
-      <input type="radio" id="${question.options[3]}" name="answer" value="${question.options[3]}" required>
+      <input type="radio" id="${question.options[3]}" name="answer" value="${question.options[3]}">
       <label for="">${question.options[3]}</label>
       <button class="js-next-button">${progressQuestion}</button>
     </form>
@@ -270,12 +270,14 @@ const scoreQuestion = function (answer) {
 };
 
 const handleNextButtonClick = function () {
-  $('main').on('submit', '.js-next-button', event => {
+  $('main').on('click', '.js-next-button', event => {
     event.preventDefault();
     let answer = $('input[name="answer"]:checked').val();
-    scoreQuestion(answer);
-    setView('feedback');
-    render();
+    if (answer) {
+      scoreQuestion(answer);
+      setView('feedback');
+      render();
+    }
   });
 };
 
