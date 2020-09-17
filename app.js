@@ -118,7 +118,7 @@ const generateQuestionViewHTML = function (question, questionNumber, score, tota
   return `
   <section>
     <h2>(${questionNumber+1}/${totalQuestions}):${question.dinosaur}</h2>
-    <img src=${question.image} alt=${question.dinosaur}>
+    <img src="${question.image}" alt="${question.dinosaur}">
     <p class="question"><i>The ${question.dinosaur} is the official dinosaur of which U.S. state?</i></p>
     
     <form class="js-questionnaire">
