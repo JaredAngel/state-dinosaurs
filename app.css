@@ -27,7 +27,7 @@ header {
 }
 
 main {
-  height: 100%;
+  height: calc(100% - 57px);
   padding: 20px;
   display: flex;
   flex-direction: column;
