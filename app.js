@@ -1,35 +1,6 @@
 /* eslint-disable strict */
 
 /**
- * Our Notes
- * ---------------------------------------------------------------------------------------------------------------
- * Template Generation Functions:
- *   ↓ these also need helper functions
- *   -generateIntroViewHTML()    // start game btn, instructions
- *   -generateQuestionViewHTML() // questions 1-5 --> if last question -> submit button not next button
- *   -generateFeedbackViewHTML() // question result at each submission
- *   -generateResultsViewHTML()  // overall results and new game btn
- *
- * Render Functions:
- *   -render()
- *     if view === "intro" --> generateIntroViewHTML()
- *     if view === "question" --> generateQuestionViewHTML()
- *     if view === "feedback" --> generateFeedbackViewHTML()
- *     if view === "result" --> generateResultsViewHTML()
- *
- * Event Listener Functions:
- *   -handleStartButtonClick()    // intro page start button;
- *                                // also handles new game button
- *      -calls reset()--> setView("question")
- *   -handleNextButtonClick()     // next question button;
- *                                // also handles submit button
- *      -calls: scoreQuestion(), setView("feedback")
- *   -handleContinueButtonClick() // feedback continue button
- *      -calls: incrementQuestion(), setView("question"), setView("results")
- * ---------------------------------------------------------------------------------------------------------------
- */
-
-/**
  *
  * Technical requirements:
  *
@@ -82,7 +53,7 @@ const store = {
       options: ['Georgia', 'Colorado', 'Oregon', 'North Carolina']
     }
   ],
-  
+
   questionNumber: 0, // The current question number user is on
   correct: false, // Whether user's most recent answer was correct
   score: 0, // The user's cumulative score
@@ -102,35 +73,49 @@ const generateIntroViewHTML = function () {
   return `
   <section>
     <h2>Do you know your state dinos?</h2>
-    <p class="intro"></p>
-    <button class="js-start-button">Start Game</button>
+    <button class="intro js-start-button">Start Game</button>
   </section>`;
-
 };
 
 const generateQuestionViewHTML = function (question, questionNumber, score, totalQuestions) {
   let progressQuestion = '';
-  if(questionNumber === 4) {
+
+  if (questionNumber === 4) {
     progressQuestion = 'Submit';
   } else {
     progressQuestion = 'Next';
   }
+
   return `
-  <section>
-    <h2>(${questionNumber+1}/${totalQuestions}):${question.dinosaur}</h2>
+  <section class="questionnaire">
+    <h2>(${questionNumber + 1}/${totalQuestions}) ${question.dinosaur}</h2>
     <img src="${question.image}" alt="${question.dinosaur}">
     <p class="question"><i>The ${question.dinosaur} is the official dinosaur of which U.S. state?</i></p>
     
     <form class="js-questionnaire">
-      <input type="radio" id="${question.options[0]}" name="answer" value="${question.options[0]}">
-      <label for="">${question.options[0]}</label>
-      <input type="radio" id="${question.options[1]}" name="answer" value="${question.options[1]}">
-      <label for="">${question.options[1]}</label>
-      <input type="radio" id="${question.options[2]}" name="answer" value="${question.options[2]}">
-      <label for="">${question.options[2]}</label>
-      <input type="radio" id="${question.options[3]}" name="answer" value="${question.options[3]}">
-      <label for="">${question.options[3]}</label>
-      <button class="js-next-button">${progressQuestion}</button>
+      <div class="group">
+        <div class ="item">
+          <div class="row">
+            <input type="radio" id="${question.options[0]}" name="answer" value="${question.options[0]}">
+            <label for="">${question.options[0]}</label>
+          </div>
+          <div class="row">
+            <input type="radio" id="${question.options[1]}" name="answer" value="${question.options[1]}">
+            <label for="">${question.options[1]}</label>
+          </div>
+        </div>
+        <div class ="item">
+          <div class="row">
+            <input type="radio" id="${question.options[2]}" name="answer" value="${question.options[2]}">
+            <label for="">${question.options[2]}</label>
+          </div>
+          <div class="row">
+            <input type="radio" id="${question.options[3]}" name="answer" value="${question.options[3]}">
+            <label for="">${question.options[3]}</label>
+          </div>
+        </div>
+      </div>
+      <button class="questionnaire js-next-button">${progressQuestion}</button>
     </form>
   </section>
   <section>
@@ -165,12 +150,12 @@ const generateFeedbackViewHTML = function (correct, question) {
 const generateResultsViewHTML = function (score, totalQuestions) {
   let message = '';
 
-  if (score < totalQuestions/3) {
-    message = 'Maybe you should study more...';
-  } else if (score < totalQuestions/3*2) {
+  if (score === totalQuestions) {
+    message = 'You\'ve got too much time on your hands...';
+  } else if (score > totalQuestions / 2) {
     message = 'Keep trying!';
   } else {
-    message = 'You\'ve got too much time on your hands...';
+    message = 'Maybe you should study more...';
   }
 
   return `
@@ -200,7 +185,6 @@ const render = function () {
 
   if (view === 'intro') {
     html = generateIntroViewHTML();
-
   } else if (view === 'question') {
     let question = store.questions[store.questionNumber];
     let questionNumber = store.questionNumber;
@@ -213,12 +197,10 @@ const render = function () {
 
 
     html = generateFeedbackViewHTML(correct, question);
-
   } else if (view === 'results') {
     let score = store.score;
 
     html = generateResultsViewHTML(score, totalQuestions);
-
   } else {
     throw new Error(`${view} is invalid value for view property`);
   }
@@ -260,8 +242,12 @@ const handleStartButtonClick = function () {
   });
 };
 
+/**
+ * Checks and updates whether the user's 
+ * answer was correct, and updates score.
+ */
 const scoreQuestion = function (answer) {
-  if(answer === store.questions[store.questionNumber].state) {
+  if (answer === store.questions[store.questionNumber].state) {
     store.correct = true;
     store.score++;
   } else {
@@ -269,6 +255,10 @@ const scoreQuestion = function (answer) {
   }
 };
 
+/**
+ * Places an event listener on the next
+ * button of the question pages.
+ */
 const handleNextButtonClick = function () {
   $('main').on('click', '.js-next-button', event => {
     event.preventDefault();
