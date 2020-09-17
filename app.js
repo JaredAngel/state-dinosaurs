@@ -82,7 +82,7 @@ const store = {
       options: ['Georgia', 'Colorado', 'Oregon', 'North Carolina']
     }
   ],
-
+  
   questionNumber: 0, // The current question number user is on
   correct: false, // Whether user's most recent answer was correct
   score: 0, // The user's cumulative score
@@ -97,12 +97,47 @@ const store = {
  * Return a string containing HTML for the 
  * introductory view.
  */
+
 const generateIntroViewHTML = function () {
-  // button event listener class = js-start-button
+  return `
+  <section>
+    <h2>Do you know your state dinos?</h2>
+    <p class="intro"></p>
+    <button class="js-start-button">Start Game</button>
+  </section>`;
 
 };
 
-const generateQuestionViewHTML = function () {
+const generateQuestionViewHTML = function (question, questionNumber, score, totalQuestions) {
+  let progressQuestion = '';
+  if(questionNumber === 4) {
+    progressQuestion = 'Submit';
+  } else {
+    progressQuestion = 'Next';
+  }
+  return `
+  <section>
+    <h2>(${questionNumber+1}/${totalQuestions}):${question.dinosaur}</h2>
+    <img src=${question.image} alt=${question.dinosaur}>
+    <p class="question"><i>The ${question.dinosaur} is the official dinosaur of which U.S. state?</i></p>
+    
+    <form class="js-questionnaire">
+      <input type="radio" id="${question.options[0]}" name="answer" value="${question.options[0]}">
+      <label for="">${question.options[0]}</label>
+      <input type="radio" id="${question.options[1]}" name="answer" value="${question.options[1]}">
+      <label for="">${question.options[1]}</label>
+      <input type="radio" id="${question.options[2]}" name="answer" value="${question.options[2]}">
+      <label for="">${question.options[2]}</label>
+      <input type="radio" id="${question.options[3]}" name="answer" value="${question.options[3]}">
+      <label for="">${question.options[3]}</label>
+      <button class="js-next-button">${progressQuestion}</button>
+    </form>
+  </section>
+  <section>
+    <h3>Current Score: ${score} out of ${totalQuestions} correct!</h3>
+  </section>
+
+`;
 
 };
 
@@ -127,12 +162,12 @@ const generateFeedbackViewHTML = function (correct, question) {
  * Return a string containing HTML for the 
  * results view.
  */
-const generateResultsViewHTML = function (score) {
+const generateResultsViewHTML = function (score, totalQuestions) {
   let message = '';
 
-  if (score < 3) {
+  if (score < totalQuestions/3) {
     message = 'Maybe you should study more...';
-  } else if (score < 4) {
+  } else if (score < totalQuestions/3*2) {
     message = 'Keep trying!';
   } else {
     message = 'You\'ve got too much time on your hands...';
@@ -161,20 +196,29 @@ const generateResultsViewHTML = function (score) {
 const render = function () {
   let view = store.view;
   let html = '';
+  let totalQuestions = store.questions.length;
 
   if (view === 'intro') {
     html = generateIntroViewHTML();
+
   } else if (view === 'question') {
-    html = '';
+    let question = store.questions[store.questionNumber];
+    let questionNumber = store.questionNumber;
+    let score = store.score;
+
+    html = generateQuestionViewHTML(question, questionNumber, score, totalQuestions);
   } else if (view === 'feedback') {
     let correct = store.correct;
     let question = store.questions[store.questionNumber];
 
+
     html = generateFeedbackViewHTML(correct, question);
+
   } else if (view === 'results') {
     let score = store.score;
 
-    html = generateResultsViewHTML(score);
+    html = generateResultsViewHTML(score, totalQuestions);
+
   } else {
     throw new Error(`${view} is invalid value for view property`);
   }
@@ -216,8 +260,23 @@ const handleStartButtonClick = function () {
   });
 };
 
+const scoreQuestion = function (answer) {
+  if(answer === store.questions[store.questionNumber].state) {
+    store.correct = true;
+    store.score++;
+  } else {
+    store.correct = false;
+  }
+};
+
 const handleNextButtonClick = function () {
-  
+  $('main').on('click', '.js-next-button', event => {
+    event.preventDefault();
+    let answer = $('input[name="answer"]:checked').val();
+    scoreQuestion(answer);
+    setView('feedback');
+    render();
+  });
 };
 
 /**
@@ -249,7 +308,7 @@ const handleContinueButtonClick = function () {
  */
 const main = function () {
   handleStartButtonClick();
-  
+  handleNextButtonClick();
   handleContinueButtonClick();
   render();
 };
