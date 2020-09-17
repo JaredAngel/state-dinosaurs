@@ -86,7 +86,7 @@ const store = {
   questionNumber: 0, // The current question number user is on
   correct: false, // Whether user's most recent answer was correct
   score: 0, // The user's cumulative score
-  view: 'intro', // The view of the page: 'intro', 'question', 'feedback', 'results'
+  view: 'feedback', // The view of the page: 'intro', 'question', 'feedback', 'results'
 };
 
 /********** TEMPLATE GENERATION FUNCTIONS **********/
@@ -139,11 +139,13 @@ const generateResultsViewHTML = function (score) {
   }
 
   return `
-    <h2>You got:<br class="hide"/>
-      <span>${score}/5</span><br class="hide"/>
-      correct.</h2>
+    <h2 class="group">
+      <span class="item">You got:</span>
+      <span class="results item">${score}/5</span>
+      <span class="item">correct.</span>
+    </h2>
     <hr>
-    <p>${message}</p>
+    <p class="results">${message}</p>
     <button class="js-start-button">New Game ⟳</button>`;
 };
 

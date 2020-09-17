@@ -71,11 +71,6 @@ hr {
   width: 15%;
 }
 
-span {
-  font-size: 4em;
-  vertical-align: sub;
-}
-
 button:hover {
   background-color: black; /* Green */
   color: white;
@@ -85,13 +80,39 @@ button:active {
   background-color: white;
 }
 
-button.feedback {
+.group {
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  flex: 1;
+}
+
+h2.intro {
+  line-height: 1.5em;
+}
+
+button.intro, button.feedback {
   font-size: 1em;
   padding: 12px 40px;
 }
 
+section.intro {
+  max-width: 80%;
+}
+
 p.feedback {
   font-size: 1.25em;
+}
+
+p.results {
+  padding-top: 10px;
+  font-size: 1.25em;
+}
+
+span.results {
+  font-size: 4em;
 }
 
 /** Media Queries **/
@@ -120,12 +141,15 @@ p.feedback {
     padding-top: 20px;
   }
 
-  span {
-    font-size: 150px;
-    padding: 0px 50px;
+  p.results {
+    font-size: 1.5em;
   }
 
-  button.feedback {
+  h2.group {
+    display: block;
+  }
+
+  button.intro, button.feedback {
     font-size: 1.5em;
   }
 
@@ -135,6 +159,12 @@ p.feedback {
 
   p.feedback {
     font-size: 1.5em;
+  }
+
+  span.results {
+    font-size: 150px;
+    padding: 0px 50px;
+    vertical-align: sub;
   }
 
   .hide {
