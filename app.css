@@ -66,7 +66,7 @@ h1 {
 }
 
 h2 {
-  font-size: 2.25em;
+  font-size: 1.5em;
   font-weight: 100;
   margin-top: 15px;
 }
@@ -141,7 +141,7 @@ form .item {
 }
 
 h2.intro {
-  line-height: 2em;
+  line-height: 1.5em;
 }
 
 button.intro,
@@ -204,6 +204,11 @@ span.results {
 
   p.results {
     font-size: 1.5em;
+  }
+
+  h2.intro {
+    font-size: 2.25em;
+    line-height: 2em;
   }
 
   h2.group {
