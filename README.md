@@ -17,7 +17,7 @@ This application was written using jQuery, JavaScript, HTML, and CSS.
 
 ## Demo
 
-<img src="live demo----replace" align="center"
+<img src=".images/state-dinosaur-demo" align="center"
      alt="A live demo of taking the state dinosaur quiz application from start to answering a question to getting answer feedback and, lastly, final results." width="120" height="178">
 
 A demo starting from the start page → a question → feedback → results.
