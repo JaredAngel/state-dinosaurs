@@ -21,9 +21,13 @@ body {
   display: block;
 }
 
+body {
+  font-family: 'Roboto Slab', serif;
+}
+
 header {
   padding: 10px;
-  background-color: burlywood;
+  background-color: rgb(237, 200, 152);
 }
 
 main {
@@ -40,6 +44,7 @@ img {
   max-width: calc(100% / 2);
   width: 100%;
   height: auto;
+  border: 5px solid rgb(0,47,167);
 }
 
 button {
@@ -53,16 +58,22 @@ button {
 
 h1 {
   font-size: 2em;
+  font-weight: 100;
+  font-style: italic;
   text-align: center;
+  text-transform: uppercase;
   margin: 0px;
 }
 
 h2 {
-  font-size: 2em;
+  font-size: 2.25em;
+  font-weight: 100;
   margin-top: 15px;
 }
 
 h3 {
+  font-weight: 500;
+  letter-spacing: 3px;
   margin: 30px;
 }
 
@@ -81,9 +92,21 @@ hr {
   width: 15%;
 }
 
+input {
+  margin-right: 10px;
+}
+
 .questionnaire h2 {
   font-size: 1.5em;
   margin: 20px;
+  letter-spacing: 3px;
+}
+
+.questionnaire span {
+  font-size: 20px;
+  vertical-align: middle;
+  margin-right: 10px;
+  font-style: italic;
 }
 
 button:hover {
@@ -101,6 +124,11 @@ button:active {
   justify-content: space-around;
 }
 
+.group-col {
+  display:flex;
+  flex-direction: column;
+}
+
 .item {
   flex: 1;
 }
@@ -108,12 +136,12 @@ button:active {
 form .item {
   font-size: 1em;
   text-align: left;
-  max-width: fit-content;
+  max-width: max-content;
   line-height: 2em;
 }
 
 h2.intro {
-  line-height: 1.5em;
+  line-height: 2em;
 }
 
 button.intro,
@@ -127,7 +155,7 @@ button.questionnaire {
 }
 
 section.intro {
-  max-width: 80%;
+  max-width: 70%;
 }
 
 p.feedback,
@@ -137,6 +165,7 @@ p.results {
 
 p.question {
   font-size: 1.15em;
+  letter-spacing: 1px;
 }
 
 p.results {
@@ -150,10 +179,6 @@ span.results {
 /** Media Queries **/
 
 @media all and (min-width: 550px) {
-  h1 {
-    text-align: left;
-  }
-
   .hide {
     display: block;
   }
@@ -187,6 +212,8 @@ span.results {
 
   form .item {
     line-height: 2em;
+    font-weight: 100;
+    letter-spacing: 1px;
   }
 
   button.intro,

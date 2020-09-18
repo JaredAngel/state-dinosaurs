@@ -71,8 +71,9 @@ const store = {
 
 const generateIntroViewHTML = function () {
   return `
-  <section>
-    <h2>Do you know your state dinos?</h2>
+  <section class="intro">
+    <h2 class="intro">These dinosaurs have been officially designated
+    as U.S. state 🦕's. <i>Can you guess which state they belong to?</i></h2>
     <button class="intro js-start-button">Start Game</button>
   </section>`;
 };
@@ -88,31 +89,31 @@ const generateQuestionViewHTML = function (question, questionNumber, score, tota
 
   return `
   <section class="questionnaire">
-    <h2>(${questionNumber + 1}/${totalQuestions}) ${question.dinosaur}</h2>
+    <h2><span>${questionNumber + 1} / ${totalQuestions}</span> ${question.dinosaur}</h2>
     <img src="${question.image}" alt="${question.dinosaur}">
     <p class="question"><i>The ${question.dinosaur} is the official dinosaur of which U.S. state?</i></p>
     
     <form class="js-questionnaire">
       <div class="group">
-        <div class ="item">
-          <div class="row">
+        <div class ="item group-col">
+          <label for="${question.options[0]}" class="item">
             <input type="radio" id="${question.options[0]}" name="answer" value="${question.options[0]}">
-            <label for="">${question.options[0]}</label>
-          </div>
-          <div class="row">
+            ${question.options[0]}
+          </label>
+          <label for="${question.options[1]}" class="item">
             <input type="radio" id="${question.options[1]}" name="answer" value="${question.options[1]}">
-            <label for="">${question.options[1]}</label>
-          </div>
+            ${question.options[1]}
+          </label>
         </div>
-        <div class ="item">
-          <div class="row">
+        <div class ="item group-col">
+          <label for="${question.options[2]}" class="item">
             <input type="radio" id="${question.options[2]}" name="answer" value="${question.options[2]}">
-            <label for="">${question.options[2]}</label>
-          </div>
-          <div class="row">
+            ${question.options[2]}
+          </label>
+          <label for="${question.options[3]}" class="item">
             <input type="radio" id="${question.options[3]}" name="answer" value="${question.options[3]}">
-            <label for="">${question.options[3]}</label>
-          </div>
+            ${question.options[3]}
+          </label>
         </div>
       </div>
       <button class="questionnaire js-next-button">${progressQuestion}</button>
@@ -121,9 +122,7 @@ const generateQuestionViewHTML = function (question, questionNumber, score, tota
   <section>
     <h3>Current Score: ${score} out of ${totalQuestions} correct!</h3>
   </section>
-
 `;
-
 };
 
 /**
